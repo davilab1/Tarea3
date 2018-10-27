@@ -3,18 +3,37 @@ import matplotlib.pylab as plt
 import math
 
 #Almacene los datos del archivo WDBC.dat.
+datos=np.getfromtxt("WDBC.dat",delimiter=",")
+columna=datos[0]
+fila=datos[1,:]
+
+# Calcule, con su implementacion propia, la matriz de covarianza de los datos y la imprima
+def pca(dat,n):
+
+    mat=np.zeros(len(filas),len(columnas))
+
+    for i in range(n,len(fila)):
+        for j in range(n,len(fila)):
+            for k in range(len(columna)):
+                x1=dat[k,i]-np.mean(dat[:,i])
+                x2=dat[k,j]-np.mean(dat[:,j])
+                xsuma=x1*x2
+                k+=xsuma
+            mat[i,j]=xsuma/(len(columna)-1)
+
+#Calcule los autovalores y autovectores de la matriz de covarianza y los imprima (para esto puede usar los paquetes de linalg de numpy). Su mensaje debe indicar explıcitamente cual es cada autovector y su autovalor correspondiente.
+resolviendo=np.linalg.eig(mat)
+
+eigvalues=resolviendo[0]
+print("Los valores propios de la matriz de covarianza son",eigvalues)
+eigvectors=resolviendo[1]
+print("Los vectores propios correspondientes de la matriz de covarianza son",eigvectors)
+
+#Imprima un mensaje que diga cuales son los parametros mas importantes en base a las componentes de los autovectores
+print("Teniendo en cuenta los autovectores, los parametros mas importantes son")
+
+#Haga una proyeccion de sus datos en el sistema de coordenadas PC1, PC2 y grafique estos datos. Use un color distinto para el diagnostico maligno y el benigno y la guarde dicha grafica sin mostrarla en ApellidoNombre_PCA.pdf.
 
 
-#• Calcule, con su implementacio ́n propia, la matriz de covarianza de los datos y la imprima
-
-
-#• Calcule los autovalores y autovectores de la matriz de covarianza y los imprima (para esto puede usar los paquetes de linalg de numpy). Su mensaje debe indicar expl ́ıcitamente cual es cada autovector y su autovalor correspondiente.
-
-
-#• Imprima un mensaje que diga cu ́ales son los par ́ametros m ́as importantes en base a las componentes de los autovectores
-
-
-#• Haga una proyecci ́on de sus datos en el sistema de coordenadas PC1, PC2 y grafique estos datos. Use un color distinto para el diagn ́ostico maligno y el benigno y la guarde dicha gr ́afica sin mostrarla en ApellidoNombre_PCA.pdf.
-
-
-#• Imprima un mensaje diciendo si el m ́etodo de PCA es u ́til para hacer esta clasificaci ́on, si no sirve o si puede ayudar al diagn ́ostico para ciertos pacientes, argumentando claramente su posici ́on.
+#Imprima un mensaje diciendo si el metodo de PCA es util para hacer esta clasificacion, si no sirve o si puede ayudar al diagnostico para ciertos pacientes, argumentando claramente su posicion
+ print("El metodo de PCa resulta ...para hacer esta clasificacion")
