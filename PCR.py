@@ -40,7 +40,7 @@ print("Los vectores propios correspondientes de la matriz de covarianza son",eig
 print("Teniendo en cuenta los autovectores, los parametros mas importantes son")
 
 #Haga una proyeccion de sus datos en el sistema de coordenadas PC1, PC2 y grafique estos datos. Use un color distinto para el diagnostico maligno y el benigno y la guarde dicha grafica sin mostrarla en ApellidoNombre_PCA.pdf.
-
+nuevascoord= 
 plt.figure()
 plt.plot(label="Maligno",color="red")
 plt.plot(label="Benigno",color="blue")
