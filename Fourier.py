@@ -30,13 +30,14 @@ plt.legend(loc="best")
 #Haga la transformada de Fourier de los datos de la senal usando su implementacion propia de la transformada discreta de fourier.
 def transFourier(N,datos):
 
-    transformada=np.zeros((n,),dtype=np.complex)
+    transformada=np.zeros((N,),dtype=np.complex)
     for i in range(N):
         for j in range(N):
             transformada[i]+=datos[j]*np.exp(-2j*np.pi*j*i/N)
     return transformada
 
 signalTransf=transFourier(n,datysignal)
+#print(len(signalTransf))
 #Haga una grafica de la transformada de Fourier y guarde dicha grafica sin mostrarla en ApellidoNombre_TF.pdf.
 
 plt.figure()
@@ -49,7 +50,7 @@ plt.ylabel('Amplitud')
 
 #Esta grafica debe ser en funcion de las frecuencias (bono de 3pts si no usa el paquete fftfreq. Indique esto con un mensaje en la terminal.)
 frecu=fftfreq(n)
-#print(frecu)
+#print(len(frecu))
 #Imprima un mensaje donde indique cuales son las frecuencias principales de su senal.
 print("Las frecuencias principales de la señal son aquellas cercanas a 0 y a 500Hz")
 
@@ -80,7 +81,7 @@ fftbajos=pasarbajos(frecu,signalTransf,fc1)
 
 
 plt.figure()
-plt.plot(frecu,fftbajos)
+plt.plot(frecu,np.real(fftbajos))
 plt.title('Tranformada Filtrada')
 plt.xlabel('Frecuencia (Hz)')
 plt.ylabel('Amplitud')
@@ -89,42 +90,59 @@ plt.ylabel('Amplitud')
 
 #scriba un mensaje en la terminal explicando por que no puede hacer la transformada de Fourier de los datos de incompletos.dat
 print ("No se puede hacer la transformada de fourier utilizando los datos de datosincompletos.dat ya que en principio la diferencia de los datos con respecto a singal es la cantidad de datos que se tienen, un arreglo posee 512 elementos mientras que el incompleto presenta 117 ")
+from scipy.interpolate import UnivariateSpline #paquete necesario para poder ajustar los datos a 512 puntos antes de realizar la interpolacion
 
 #Haga una interpolacion cuadratica y una cubica de sus datos incompletos.dat con 512 puntos.
-puntos=512
+nuevospuntos=512
+incompletosViejos=np.arange(0,len(datosincom))
+nuevosIncompletos=np.linspace(0,len(datosincom)-1,nuevospuntos)
+
+splx=UnivariateSpline(incompletosViejos,datxinc)
+nuevoArrIncompetox=splx(nuevosIncompletos)
+#print(len(nuevoArrIncompetox))
+
+sply=UnivariateSpline(incompletosViejos,datyinc)
+nuevoArrIncompetoy=sply(nuevosIncompletos)
+
+
+#print(len(nuvevoArrIncompeto))
 def interlineal(xx,yy):
-    ilineal=interp1d(xx,yy,kind='linear',fill_value="extrapolate")
+    ilineal=interp1d(xx,yy,kind='linear')
     return ilineal
 
 def intercuadrat(xx,yy):
-    icuadrat=interp1d(xx,yy,kind='quadratic',fill_value="extrapolate")
+    icuadrat=interp1d(xx,yy,kind='quadratic')
     return icuadrat
 
-interplineal=interlineal(frecu,datosincom)
-interpcuad=intercuadrat(frecu,datosincom)
-'''
+interplineal=interlineal(nuevoArrIncompetoy,nuevoArrIncompetox)
+interliarr=interplineal(frecu)
+#print(np.size(interplineal))
+interpcuad=intercuadrat(nuevoArrIncompetoy,nuevoArrIncompetox)
+intercuadarr=interpcuad(frecu)
+
 
 # Haga la trasformada de Fourier de cada una de las series de datos interpoladas.
 
+linealTransf=transFourier(n,interliarr)
+cuadratTransf=transFourier(n,intercuadarr)
+
 
 # Haga unag rafica con tres subplots delas tres transformada deFourier(datosdesignal.dat y datos interpolados) y guardela sin mostrarla en ApellidoNombre_TF_interpola.pdf.
-
-
 plt.figure()
 plt.subplot(311)
 plt.title('Tranformada de Datos')
-plt.plot()
+plt.plot(frecu,signalTransf)
 plt.subplot(312)
 plt.title('Transformada de interpolacion lineal')
-plt.plot()
+plt.plot(frecu,linealTransf)
 plt.subplot(313)
 plt.title('Transformada de interpolacion cuadratica')
-plt.plot()
+plt.plot(frecu,cuadratTransf)
 plt.tight_layout()
-
+plt.show()
 #plt.savefig("AvilaDario_TF_interpola.pdf")
 
-
+'''
 
 #Imprima un mensaje donde describa las diferencias encontradas entre la transformada de Fourier de la senal original y las de las interpolaciones.
 print("Las diferencias encontradas entre la transformada de Fourier de la signal original y las interpolaciones es que basicamente... ")
@@ -146,8 +164,8 @@ filtermilcuadrat=pasarbajos()
 filterquindatos=pasarbajos()
 #print (np.real())
 filterquinlineal=pasarbajos()
-filterquincuadrat=pasarbajos()'''
-
+filterquincuadrat=pasarbajos()
+'''
 # Haga una grafica con dos subplots (uno para cada filtro) de las 3 senales filtradas y guardela sin mostrarla en ApellidoNombre_2Filtros.pdf.
 
 plt.figure()
