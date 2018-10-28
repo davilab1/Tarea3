@@ -40,7 +40,9 @@ print("Los vectores propios correspondientes de la matriz de covarianza son",eig
 print("Teniendo en cuenta los autovectores, los parametros mas importantes son")
 
 #Haga una proyeccion de sus datos en el sistema de coordenadas PC1, PC2 y grafique estos datos. Use un color distinto para el diagnostico maligno y el benigno y la guarde dicha grafica sin mostrarla en ApellidoNombre_PCA.pdf.
-nuevascoord= 
+nuevascoord= np.dot(datos.eigvectors)
+'''
+
 plt.figure()
 plt.plot(label="Maligno",color="red")
 plt.plot(label="Benigno",color="blue")
@@ -48,6 +50,7 @@ plt.title('Proyeccion de Datos en sistema de coordenadas PCA')
 plt.xlabel()
 plt.ylabel()
 plt.savefig("")
+
 
 
 #Imprima un mensaje diciendo si el metodo de PCA es util para hacer esta clasificacion, si no sirve o si puede ayudar al diagnostico para ciertos pacientes, argumentando claramente su posicion

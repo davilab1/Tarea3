@@ -91,17 +91,18 @@ plt.ylabel('Amplitud')
 print ("No se puede hacer la transformada de fourier utilizando los datos de datosincompletos.dat ya que en principio la diferencia de los datos con respecto a singal es la cantidad de datos que se tienen, un arreglo posee 512 elementos mientras que el incompleto presenta 117 ")
 
 #Haga una interpolacion cuadratica y una cubica de sus datos incompletos.dat con 512 puntos.
-'''puntos=512
+puntos=512
 def interlineal(xx,yy):
-    ilineal=interp1d(xx,yy,kind='linear',fill_value=512)
+    ilineal=interp1d(xx,yy,kind='linear',fill_value="extrapolate")
     return ilineal
 
 def intercuadrat(xx,yy):
-    icuadrat=interp1d(xx,yy,kind='quadratic',fill_value=512)
+    icuadrat=interp1d(xx,yy,kind='quadratic',fill_value="extrapolate")
     return icuadrat
 
 interplineal=interlineal(frecu,datosincom)
-interpcuad=intercuadrat(frecu,datosincom)'''
+interpcuad=intercuadrat(frecu,datosincom)
+'''
 
 # Haga la trasformada de Fourier de cada una de las series de datos interpoladas.
 
@@ -131,7 +132,8 @@ print("Las diferencias encontradas entre la transformada de Fourier de la signal
 # Aplique el filtro pasabajos con una frecuencia de corte fc = 1000Hz y con una frecuencia de corte de fc = 500Hz.
 fc2=500
 #aplicando frecuencia de corte 1000 para las 3 signals
-'''filtermildatos=pasarbajos()
+
+filtermildatos=pasarbajos()
 #print (np.real())
 
 filtermillineal=pasarbajos()
