@@ -4,30 +4,32 @@ import math
 import scipy as sp
 from scipy.interpolate import interp1d
 
-
 #Almacene los datos de signal.dat y de incompletos.dat
 datosignal=np.genfromtxt("signal.dat")
 datosincom=np.genfromtxt("incompletos.dat")
 #print(datosignal)
 #Haga una grafica de los datos de signal.dat y guarde dicha grafica sin mostrarla en ApellidoNombre_signal.pdf.
-
+n=len(datosignal)
+print (n)
 plt.figure()
 plt.plot(datosignal,label="signal")
 plt.title('Datos de signal.dat')
 plt.legend(loc="best")
 #plt.savefig("AvilaDario_signal.pdf")
 
-'''
-#Haga la transformada de Fourier de los datos de la senal usando su implementacion propia de la transformada discreta de fourier.
 
+#Haga la transformada de Fourier de los datos de la senal usando su implementacion propia de la transformada discreta de fourier.
+'''Y=np.zeros((n,),dtype=np.complex)
+for k in range(0,n):
+    for nn in range(0,n):
+        Y[k]+=datosignal[nn]*np.exp(-2j*np.pi*k*nn/n)
 
 #Haga una grafica de la transformada de Fourier y guarde dicha grafica sin mostrarla en ApellidoNombre_TF.pdf.
 plt.figure()
-plt.plot()
-plt.title('')
-plt.show()
-plt.xlabel()
-plt.ylabel()
+plt.plot(Y)
+plt.title('Transformada de Fourier')
+plt.show()'''
+
 #plt.savefig("AvilaDario_TF.pdf")
 
 #Esta grafica debe ser en funcion de las frecuencias (bono de 3pts si no usa el paquete fftfreq. Indique esto con un mensaje en la terminal.)
@@ -71,13 +73,13 @@ interpcuad=intercuadrat()
 '''
 
 plt.figure()
-plt.subplot(211)
+plt.subplot(311)
 plt.title('Tranformada de Datos')
 plt.plot()
-plt.subplot(212)
+plt.subplot(312)
 plt.title('Transformada de interpolacion lineal')
 plt.plot()
-plt.subplot(213)
+plt.subplot(313)
 plt.title('Transformada de interpolacion cuadratica')
 plt.plot()
 #plt.savefig("AvilaDario_TF_interpola.pdf")
@@ -98,4 +100,4 @@ plt.title('')
 plt.show()
 plt.xlabel()
 plt.ylabel()
-#plt.savefig("AvilaDario_2Filtros.pdf")
+#plt.savefig("AvilaDario_2Filtros.pdf")'''
