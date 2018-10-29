@@ -49,7 +49,7 @@ for i in range(N)
 
 matrizcov=pca2(datos,fila,columna)
 matriznumpy=np.cov(np.transpose(datos))
-print(matrizcov)
+print(np.shape(matrizcov))
 #print("-----------")
 #print(matriznumpy)
 
@@ -66,20 +66,27 @@ print("Teniendo en cuenta los autovectores, los parametros mas importantes son")
 eig1=eigvectors[:,0]
 eig2=eigvectors[:,1]
 #Haga una proyeccion de sus datos en el sistema de coordenadas PC1, PC2 y grafique estos datos. Use un color distinto para el diagnostico maligno y el benigno y la guarde dicha grafica sin mostrarla en ApellidoNombre_PCA.pdf.
+PCA1=np.dot(datos,eig1)
+PCA2=np.dot(datos,eig2)
 
-
-'''
-def clasificacion():
+def clasificacion(arr,p1,p2):
     bpc1=[]
+    mpc1=[]
+    bpc2=[]
     mpc2=[]
-    bpc1=[]
-    mpc2=[]
-    return'''
+    for i in range(len(columnas))
+        if(arr[:,i]=="M"):
+            mpc1[i]+=pc1[i]
+            mpc2[i]+=pc2[i]
+        elif(arr[:,i]=="B"):
+            bpc1+=pc1[i]
+            bpc2+=pc2[i]
 
+    return mpc1,mpc2,bpc1,bpc2
 
 
 plt.figure()
-plt.plot(label="Maligno",color="red")
+plt.scatter(PCA1,PCA2,label="Maligno",color="red")
 plt.plot(label="Benigno",color="blue")
 plt.title('Proyeccion de Datos en sistema de coordenadas PCA')
 plt.xlabel('PC1')
