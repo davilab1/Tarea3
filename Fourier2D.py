@@ -11,9 +11,9 @@ arbol=plt.imread('arbol.png')
 
 
 # Tomando como referencia https://matplotlib.org/api/_as_gen/matplotlib.pyplot.imshow.html
-plt.figure()
-plt.imshow(arbol,plt.cm.gray)
-plt.title('prueba')
+#plt.figure()
+#plt.imshow(arbol,plt.cm.gray)
+#plt.title('prueba')
 
 #Usando los paquetes de scipy, realice la transformada de Fourier de la arboln. Eligiendo una escala apropiada
 transfIm=fft2(arbol)
@@ -42,25 +42,26 @@ def filtrando(ftrans):
                 ftrans[i,j]=ftrans[i,j]
     return ftrans
 
-filtroTransf=filtrando(transfIm)
+filtroTransf=filtrando(transhiffIm)
 
 #Grafique la transformada de Fourier despues del proceso de filtrado, esta vez en escala LogNorm y guarde dicha grafica
 #sin mostrarla en ApellidoNombre_FT2D_filtrada.pdf.
 plt.figure()
-plt.imshow(filtroTransf,norm=LogNorm())
+plt.imshow(np.abs(filtroTransf),norm=LogNorm(vmin=5))
 plt.title('Transformada de Fourier despues de Filtro')
-plt.show()
-#plt.savefig("AvilaDario_FT2D_Filtrada.pdf)
 
+#plt.savefig("AvilaDario_FT2D_Filtrada.pdf)
 
 #Haga la transformada de Fourier inversa y grafique la arboln filtrada. Verifique que su filtro elimina el ruido periodico
 # y guarde dicha arboln sin mostrarla en ApellidoNombre_arboln_filtrada.pdf.
-'''
-tinvf2=ifftshift(filtrada)
-imfiltrada=ifft2(tinvf2).real
+newarbol=ifft2(fftshift(filtroTransf))
 
+#tinvf2=ifftshift(filtroTransf)
+#imfiltrada=ifft2(tinvf2).real
+#File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/matplotlib/image.py", line 642, in set_dataraise TypeError("Image data cannot be converted to float")
 plt.figure()
 plt.title('Transformada inversa de Fourier filtrada')
-plt.imshow(imfiltrada, cmap='gray')
+plt.imshow(np.abs(newarbol),plt.cm.gray)
+#plt.imshow(imfiltrada, cmap='gray')
+plt.show()
 #plt.savefig("AvilaDario_arboln_filtrada.pdf)
-'''

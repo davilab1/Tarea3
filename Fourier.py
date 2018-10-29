@@ -175,7 +175,6 @@ filterquincuadrat=pasarbajos(frecu,cuadratTransf,fc2)
 
 
 # Haga una grafica con dos subplots (uno para cada filtro) de las 3 senales filtradas y guardela sin mostrarla en ApellidoNombre_2Filtros.pdf.
-
 plt.figure()
 plt.subplot(211)
 plt.plot(frecu,filtermildatos,label='Signal',color="green")
@@ -185,7 +184,6 @@ plt.title('Filtro de 1000Hz')
 plt.xlabel('Frecuencia (Hz)')
 plt.ylabel('Amplitud')
 plt.legend(loc="best")
-
 
 plt.subplot(212)
 plt.plot(frecu, filterquindatos,label='Signal',color="green")
