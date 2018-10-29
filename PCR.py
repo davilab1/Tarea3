@@ -8,7 +8,8 @@ columna=datos[:,0]
 #print (len(columna)) 569
 fila=datos[0,:]
 #print(len(fila)) 30
-info=np.genfromtxt("WDBC.dat",delimiter=",",usecols=(0,1))
+info=np.genfromtxt("WDBC.dat",delimiter=",",usecols=(1))
+print(len(info))
 # Calcule, con su implementacion propia, la matriz de covarianza de los datos y la imprima
 '''
 def pca(dat,filas,columnas):
@@ -79,13 +80,13 @@ def clasificacion(arr,p1,p2):
     mpc1=[]
     bpc2=[]
     mpc2=[]
-    for i in range(len(arr[:,0])):
-        if(arr[:,i+1]=="M"):
-            mpc1[i]+=pc1[i]
-            mpc2[i]+=pc2[i]
-        elif(arr[:,i+1]=="B"):
-            bpc1+=pc1[i]
-            bpc2+=pc2[i]
+    for i in range(len(arr)):
+        if(arr[i]=="M"):
+            mpc1+=p1[i]
+            mpc2+=p2[i]
+        elif(arr[i]=="B"):
+            bpc1+=p1[i]
+            bpc2+=p2[i]
 
     return mpc1,mpc2,bpc1,bpc2
 
