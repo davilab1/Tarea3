@@ -26,6 +26,7 @@ plt.imshow(np.log(abs(transfIm)),plt.cm.gray)#realizando esta grafica, y viendo 
 #plt.imshow(abs(transhiffIm),plt.cm.gray)
 plt.title('Transformada de fourier para arbol')
 plt.colorbar()
+#hola
 
 #plt.savefig("AvilaDario_FT2D.pdf)
 

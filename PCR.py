@@ -25,7 +25,7 @@ def pca(dat,filas,columnas):
             mat[i,j]=xsuma/(len(columna)-1)
             #print (mat[i,j])
     return mat
-
+#holz
 
 N=np.shape(dat)[1]
 mat=np.zeros((len(filas),len(filas)))
