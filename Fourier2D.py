@@ -50,15 +50,15 @@ def filtrando(ftrans):
 def filtrando(ftrans):
     for i in range(len(ftrans)[0]):
         for j in range(len(ftrans)):
-            if (i>120 and i<140 and j>120 and j<140):
+            if (i>120 and i<140 and j>120 and j<140):#son los valores en donde se encuentrale el punto claro en la tranformada
                 ftrans[i,j]==0
 
             else:
                 ftrans[i,j]=ftrans[i,j]
     return ftrans
 
-arbol2=np.copy(transhiffIm)
-filtroTransf=filtrando(arbol2)
+#arbol2=np.copy(transhiffIm)
+#filtroTransf=filtrando(arbol2)
 #Grafique la transformada de Fourier despues del proceso de filtrado, esta vez en escala LogNorm y guarde dicha grafica
 #sin mostrarla en ApellidoNombre_FT2D_filtrada.pdf.
 plt.figure()

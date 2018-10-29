@@ -39,7 +39,6 @@ def transFourier(N,datos):
 
 #signalprueba=trans(datxsignal,datysignal,n)
 signalTransf=transFourier(n,datysignal)
-#print(len(signalTransf))
 frecu=fftfreq(n,espaciado)
 #Haga una grafica de la transformada de Fourier y guarde dicha grafica sin mostrarla en ApellidoNombre_TF.pdf.
 plt.figure()
@@ -69,14 +68,13 @@ def invTransFourier(N,transformada):
 
 def pasarbajos(freq,ftran,filtro):
     for i in range(len(freq)):
-        if(abs(freq[i]>filtro)):
+        if(abs(freq[i])>filtro):
             ftran[i]=0
         else:
             ftran[i]=ftran[i]
     return ftran
 
 fc1=1000
-
 #signalinvTransf=invTransFourier(n,signalTransf)
 #invfftbajos=pasarbajos(frecu,signalinvTransf,fc1)
 inversafiltrada=invTransFourier(n,pasarbajos(frecu,signalTransf,fc1))
@@ -85,7 +83,7 @@ inversafiltrada=invTransFourier(n,pasarbajos(frecu,signalTransf,fc1))
 
 #print (np.real(fftbajos))
 plt.figure()
-#plt.plot(datxsignal,datysignal,"o",label="Signal original",color="black")
+#plt.plot(datxsignal,datysignal,label="Signal original",color="black")
 plt.plot(datxsignal,np.real(inversafiltrada), label="Inversa de Signal Filtrada",color="red")
 plt.title('Tranformada Inversa Filtrada')
 plt.xlabel('x')
@@ -96,24 +94,23 @@ plt.legend(loc="best")
 
 #scriba un mensaje en la terminal explicando por que no puede hacer la transformada de Fourier de los datos de incompletos.dat
 print ("En teoria si se le puede hacer la transformada de fourier utilizando los datos de datosincompletos.dat ya que en principio la diferencia de los datos con respecto a singal es la cantidad de datos que se tienen, un arreglo posee 512 elementos mientras que el incompleto presenta 117, asi que al tener una menor cantidad de frecuencias, presenta una menor cantidad de ruido. Por lo tanto, no seria tan util realizar la tranformada de fourier para estos datos.No obsttante, cabe resaltar que el espaciamiento que tiene la frecuencia no es uniforme, por lo tanto es necesario usar el Sampling reate para poderla tener uniforme.  ")
+
+
 from scipy.interpolate import UnivariateSpline #paquete necesario para poder ajustar los datos a 512 puntos antes de realizar la interpolacion
 
 datxinc=datosincom[:,0]
 datyinc=datosincom[:,1]
-
+'''
 #Haga una interpolacion cuadratica y una cubica de sus datos incompletos.dat con 512 puntos.
 nuevospuntos=512
 incompletosViejos=np.arange(0,len(datosincom))
 nuevosIncompletos=np.linspace(0,len(datosincom)-1,nuevospuntos)
-
 splx=UnivariateSpline(incompletosViejos,datxinc)
 nuevoArrIncompetox=splx(nuevosIncompletos)
 #print(len(nuevoArrIncompetox))
-
 sply=UnivariateSpline(incompletosViejos,datyinc)
 nuevoArrIncompetoy=sply(nuevosIncompletos)
 #print (nuevoArrIncompetoy)
-
 #print(len(nuvevoArrIncompeto))
 def interpolando(xx,yy,xnew):
 
@@ -121,7 +118,6 @@ def interpolando(xx,yy,xnew):
     icuadrat=interp1d(xx,yy,kind='quadratic')
     intercubic=icubica(xnew)
     intercuad=icuadrat(xnew)
-
     return  icuadrat,icubica
 '''
 def interpola(datosin,newdata):
@@ -131,7 +127,8 @@ def interpola(datosin,newdata):
     intcubica=intercubic(newdata)
     intcuadrat=intercuad(newdata)
 
-    return 0'''
+    return 0
+
 #minimo=min(datxinc)
 #print (minimo)
 
@@ -146,23 +143,32 @@ def intercuadrat(xx,yy):
 #interpolacion cubica
 def intercubic(xx,yy):
     icubica=interp1d(xx,yy,kind='cubic')
+
     return icubica
 
-
-
+xnew=np.linspace(datxinc[0],datxinc[-1],512)
+'''
 interpcubica=intercubic(nuevoArrIncompetox,nuevoArrIncompetoy)
 intercubicarr=interpcubica(frecu)
-
 interpcuad=intercuadrat(nuevoArrIncompetox,nuevoArrIncompetoy)
 intercuadarr=interpcuad(frecu)
-
-#Haga la trasformada de Fourier de cada una de las series de datos interpoladas.
-#cubicTransf=transFourier(n,interpcub)
-#cuadratTransf=transFourier(n,interpcuad)
-
 probandocub=transFourier(n,interpcubica)
 probandocuadrat=transFourier(n,intercuadarr)
 '''
+#Haga la trasformada de Fourier de cada una de las series de datos interpoladas.
+cubica=intercubic(datxinc,datyinc)
+cubicabien=cubica(xnew)
+
+cuadratic=intercuadrat(datxinc,datyinc)
+cuadratbien=cuadratic(xnew)
+
+cubicTransf=transFourier(n,cubicabien)
+cuadratTransf=transFourier(n,cuadratbien)
+'''
+nparaInterp=len(xnew)
+espaciado2=datxinc[1]-datxinc[0]
+SamplR=1/espaciado2
+frecu_interp=fftfreq(nparaInterp,espaciado2)'''
 
 # Haga unag rafica con tres subplots delas tres transformada deFourier(datosdesignal.dat y datos interpolados) y guardela sin mostrarla en ApellidoNombre_TF_interpola.pdf.
 plt.figure(figsize=[15,15])
@@ -175,10 +181,12 @@ plt.plot(frecu,cubicTransf)
 plt.subplot(313)
 plt.title('Transformada de interpolacion cuadratica')
 plt.plot(frecu,cuadratTransf)
+
 plt.tight_layout()
+
 plt.show()
 #plt.savefig("AvilaDario_TF_interpola.pdf")'''
-'''
+
 #Imprima un mensaje donde describa las diferencias encontradas entre la transformada de Fourier de la senal original y las de las interpolaciones.
 print("Las diferencias encontradas entre la transformada de Fourier de la signal original y las interpolaciones es que basicamente... ")
 # Aplique el filtro pasabajos con una frecuencia de corte fc = 1000Hz y con una frecuencia de corte de fc = 500Hz.
@@ -193,27 +201,40 @@ filterquindatos=pasarbajos(frecu,signalTransf,fc2)
 filterquincubic=pasarbajos(frecu,cubicTransf,fc2)
 filterquincuadrat=pasarbajos(frecu,cuadratTransf,fc2)
 
+#Sacando la inversa para poderla graficar como señal
+#inversafiltrada=invTransFourier(n,pasarbajos(frecu,signalTransf,fc1))
+invfilterSignalmil=invTransFourier(n,filtermildatos)
+invfilterCubicmil=invTransFourier(n,filtermilcubic)
+invfilterCuadralmil=invTransFourier(n,filtermilcuadrat)
+
+invfilterSignalquin=invTransFourier(n,filtermildatos)
+invfilterCubicmil=invTransFourier(n,filtermilcubic)
+invfilterCuadralquin=invTransFourier(n,filtermilcuadrat)
+
+
+
 # Haga una grafica con dos subplots (uno para cada filtro) de las 3 senales filtradas y guardela sin mostrarla en ApellidoNombre_2Filtros.pdf.
 plt.figure()
 plt.subplot(211)
-plt.plot(frecu,filtermildatos,label='Signal',color="green")
-plt.plot(frecu,filtermilcubic,label='Signal Cubica',color="blue")
-plt.plot(frecu,filtermilcuadrat,label="Signal Cuadratica",color="red")
+plt.plot(frecu,np.real(invfilterSignalmil),label='Signal',color="green")
+plt.plot(frecu,np.real(invfilterCubicmil),label='Signal Cubica',color="blue")
+plt.plot(frecu,np.real(invfilterCuadralmil),label="Signal Cuadratica",color="red")
 plt.title('Filtro de 1000Hz')
 plt.xlabel('Frecuencia (Hz)')
 plt.ylabel('Amplitud')
 plt.legend(loc="best")
 
 plt.subplot(212)
-plt.plot(frecu, filterquindatos,label='Signal',color="green")
-plt.plot(frecu,filterquincubic,label='Signal Cubica',color="blue")
-plt.plot(frecu,filterquincuadrat,label='Signal Cuadratica',color="red")
+plt.plot(frecu, np.real(invfilterSignalquin),label='Signal',color="green")
+plt.plot(frecu,np.real(invfilterCubicmil),label='Signal Cubica',color="blue")
+plt.plot(frecu,np.real(invfilterCuadralquin),label='Signal Cuadratica',color="red")
 plt.title('Filtro de 500Hz')
 plt.xlabel('Frecuencia (Hz)')
 plt.ylabel('Amplitud')
 plt.legend(loc="best")
 
 plt.tight_layout()
+
 plt.show()
 #plt.savefig("AvilaDario_2Filtros.pdf")'''
 print("descomentar los savefig!!!!!")
