@@ -11,6 +11,7 @@ arbol=plt.imread('arbol.png')
 
 
 # Tomando como referencia https://matplotlib.org/api/_as_gen/matplotlib.pyplot.imshow.html
+
 #plt.figure()
 #plt.imshow(arbol,plt.cm.gray)
 #plt.title('prueba')
@@ -43,13 +44,11 @@ def filtrando(ftrans):
     return ftrans
 
 filtroTransf=filtrando(transhiffIm)
-
 #Grafique la transformada de Fourier despues del proceso de filtrado, esta vez en escala LogNorm y guarde dicha grafica
 #sin mostrarla en ApellidoNombre_FT2D_filtrada.pdf.
 plt.figure()
 plt.imshow(np.abs(filtroTransf),norm=LogNorm(vmin=5))
 plt.title('Transformada de Fourier despues de Filtro')
-
 #plt.savefig("AvilaDario_FT2D_Filtrada.pdf)
 
 #Haga la transformada de Fourier inversa y grafique la arboln filtrada. Verifique que su filtro elimina el ruido periodico

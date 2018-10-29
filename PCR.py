@@ -56,9 +56,9 @@ print(matrizcov)
 #Calcule los autovalores y autovectores de la matriz de covarianza y los imprima (para esto puede usar los paquetes de linalg de numpy). Su mensaje debe indicar explıcitamente cual es cada autovector y su autovalor correspondiente.
 resolviendo=np.linalg.eig(matrizcov)
 eigvalues=resolviendo[0]
-print("Los valores propios de la matriz de covarianza son",eigvalues)
+print("Los valores propios de la matriz de covarianza son")#,eigvalues)
 eigvectors=resolviendo[1]
-print("Los vectores propios correspondientes de la matriz de covarianza son",eigvectors)
+print("Los vectores propios correspondientes de la matriz de covarianza son")#,eigvectors)
 
 #Imprima un mensaje que diga cuales son los parametros mas importantes en base a las componentes de los autovectores
 print("Teniendo en cuenta los autovectores, los parametros mas importantes son")
@@ -66,17 +66,17 @@ print("Teniendo en cuenta los autovectores, los parametros mas importantes son")
 eig1=eigvectors[:,0]
 eig2=eigvectors[:,1]
 #Haga una proyeccion de sus datos en el sistema de coordenadas PC1, PC2 y grafique estos datos. Use un color distinto para el diagnostico maligno y el benigno y la guarde dicha grafica sin mostrarla en ApellidoNombre_PCA.pdf.
-PC1= np.dot(datos,eigvectors)
-PC2=np.dot(datos,eigvectors)
+
 
 '''
 def clasificacion():
-    bpc1=
-    mpc2=
-    bpc1=
-    mpc2=
+    bpc1=[]
+    mpc2=[]
+    bpc1=[]
+    mpc2=[]
+    return'''
 
-    return '''
+
 
 plt.figure()
 plt.plot(label="Maligno",color="red")
