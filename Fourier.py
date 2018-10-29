@@ -129,10 +129,6 @@ def interpola(datosin,newdata):
 
     return 0
 
-#minimo=min(datxinc)
-#print (minimo)
-
-#xnuevo=np.linspace(min(datyinc),max(datyinc),512)
 #interpcub,interpcuad=interpolando(datxinc,datyinc,xnuevo)
 
 #interpolacion Cuadratica
@@ -143,7 +139,6 @@ def intercuadrat(xx,yy):
 #interpolacion cubica
 def intercubic(xx,yy):
     icubica=interp1d(xx,yy,kind='cubic')
-
     return icubica
 
 xnew=np.linspace(datxinc[0],datxinc[-1],512)
@@ -164,11 +159,11 @@ cuadratbien=cuadratic(xnew)
 
 cubicTransf=transFourier(n,cubicabien)
 cuadratTransf=transFourier(n,cuadratbien)
-'''
+
 nparaInterp=len(xnew)
 espaciado2=datxinc[1]-datxinc[0]
 SamplR=1/espaciado2
-frecu_interp=fftfreq(nparaInterp,espaciado2)'''
+frecu_interp=fftfreq(nparaInterp,espaciado2)
 
 # Haga unag rafica con tres subplots delas tres transformada deFourier(datosdesignal.dat y datos interpolados) y guardela sin mostrarla en ApellidoNombre_TF_interpola.pdf.
 plt.figure(figsize=[15,15])
@@ -177,14 +172,12 @@ plt.title('Tranformada de Datos')
 plt.plot(frecu,signalTransf)
 plt.subplot(312)
 plt.title('Transformada de interpolacion cubica')
-plt.plot(frecu,cubicTransf)
+plt.plot(frecu_interp,cubicTransf)
 plt.subplot(313)
 plt.title('Transformada de interpolacion cuadratica')
-plt.plot(frecu,cuadratTransf)
-
+plt.plot(frecu_interp,cuadratTransf)
 plt.tight_layout()
 
-plt.show()
 #plt.savefig("AvilaDario_TF_interpola.pdf")'''
 
 #Imprima un mensaje donde describa las diferencias encontradas entre la transformada de Fourier de la senal original y las de las interpolaciones.
@@ -192,6 +185,7 @@ print("Las diferencias encontradas entre la transformada de Fourier de la signal
 # Aplique el filtro pasabajos con una frecuencia de corte fc = 1000Hz y con una frecuencia de corte de fc = 500Hz.
 fc2=500
 #aplicando frecuencia de corte 1000 para las 3 signals
+'''
 filtermildatos=pasarbajos(frecu,signalTransf,fc1)
 filtermilcubic=pasarbajos(frecu,cubicTransf,fc1)
 filtermilcuadrat=pasarbajos(frecu,cuadratTransf,fc1)
@@ -199,35 +193,41 @@ filtermilcuadrat=pasarbajos(frecu,cuadratTransf,fc1)
 #aplicando frecuencia de corte 500 para las 3 signals
 filterquindatos=pasarbajos(frecu,signalTransf,fc2)
 filterquincubic=pasarbajos(frecu,cubicTransf,fc2)
-filterquincuadrat=pasarbajos(frecu,cuadratTransf,fc2)
+filterquincuadrat=pasarbajos(frecu,cuadratTransf,fc2)'''
 
 #Sacando la inversa para poderla graficar como señal
-#inversafiltrada=invTransFourier(n,pasarbajos(frecu,signalTransf,fc1))
+invfilter_Signalmil=invTransFourier(n,pasarbajos(frecu,signalTransf,fc1))
+invfilter_Cubicmil=invTransFourier(n,pasarbajos(frecu_interp,cubicTransf,fc1))
+invfilter_Cuadmil=invTransFourier(n,pasarbajos(frecu_interp,cuadratTransf,fc1))
+
+invfilter_Signalquin=invTransFourier(n,pasarbajos(frecu,signalTransf,fc2))
+invfilter_Cubicquin=invTransFourier(n,pasarbajos(frecu_interp,cubicTransf,fc2))
+invfilter_Cuadquin=invTransFourier(n,pasarbajos(frecu_interp,cuadratTransf,fc2))
+
+'''
 invfilterSignalmil=invTransFourier(n,filtermildatos)
 invfilterCubicmil=invTransFourier(n,filtermilcubic)
 invfilterCuadralmil=invTransFourier(n,filtermilcuadrat)
 
 invfilterSignalquin=invTransFourier(n,filtermildatos)
 invfilterCubicmil=invTransFourier(n,filtermilcubic)
-invfilterCuadralquin=invTransFourier(n,filtermilcuadrat)
-
-
+invfilterCuadralquin=invTransFourier(n,filtermilcuadrat)'''
 
 # Haga una grafica con dos subplots (uno para cada filtro) de las 3 senales filtradas y guardela sin mostrarla en ApellidoNombre_2Filtros.pdf.
 plt.figure()
 plt.subplot(211)
-plt.plot(frecu,np.real(invfilterSignalmil),label='Signal',color="green")
-plt.plot(frecu,np.real(invfilterCubicmil),label='Signal Cubica',color="blue")
-plt.plot(frecu,np.real(invfilterCuadralmil),label="Signal Cuadratica",color="red")
+plt.plot(frecu,np.real(invfilter_Signalmil),"--",label='Signal',color="green")
+plt.plot(frecu_interp,np.real(invfilter_Cubicmil),label='Signal Cubica',color="blue")
+plt.plot(frecu_interp,np.real(invfilter_Cuadmil),label="Signal Cuadratica",color="red")
 plt.title('Filtro de 1000Hz')
 plt.xlabel('Frecuencia (Hz)')
 plt.ylabel('Amplitud')
 plt.legend(loc="best")
 
 plt.subplot(212)
-plt.plot(frecu, np.real(invfilterSignalquin),label='Signal',color="green")
-plt.plot(frecu,np.real(invfilterCubicmil),label='Signal Cubica',color="blue")
-plt.plot(frecu,np.real(invfilterCuadralquin),label='Signal Cuadratica',color="red")
+plt.plot(frecu, np.real(invfilter_Signalquin),"--",label='Signal',color="green")
+plt.plot(frecu_interp,np.real(invfilter_Cubicquin),label='Signal Cubica',color="blue")
+plt.plot(frecu_interp,np.real(invfilter_Cuadquin),label='Signal Cuadratica',color="red")
 plt.title('Filtro de 500Hz')
 plt.xlabel('Frecuencia (Hz)')
 plt.ylabel('Amplitud')
