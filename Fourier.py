@@ -85,7 +85,8 @@ fc1=1000
 
 #obteniendo la tranformada inversa de fourier para graficarla como senal
 inversafiltrada=invTransFourier(n,pasarbajos(frecu,signalTransf,fc1))
-inversafiltrada2=ifft(n,pasarbajos(frecu,signalTransf,fc1))
+#usando o no el paquete da la misma inversa
+#inversafiltrada2=ifft(n,pasarbajos(frecu,signalTransf,fc1))
 #filtro2=pasarbajos(frecu,signalTransf,fc1)
 #inv2=invTransFourier(n,filtro2)
 
@@ -212,4 +213,4 @@ plt.legend(loc="best")
 
 plt.tight_layout()
 plt.savefig("AvilaDario_2Filtros.pdf")
-plt.show()
+#plt.show()
